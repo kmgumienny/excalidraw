@@ -1,61 +1,64 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { AppClassProperties, AppState, Primitive } from "../types";
-import type { StoreActionType } from "../store";
+import { trackEvent } from "../analytics";
 import {
   DEFAULT_ELEMENT_BACKGROUND_COLOR_PALETTE,
   DEFAULT_ELEMENT_BACKGROUND_PICKS,
   DEFAULT_ELEMENT_STROKE_COLOR_PALETTE,
   DEFAULT_ELEMENT_STROKE_PICKS,
 } from "../colors";
-import { trackEvent } from "../analytics";
 import { ButtonIconSelect } from "../components/ButtonIconSelect";
 import { ColorPicker } from "../components/ColorPicker/ColorPicker";
-import { IconPicker } from "../components/IconPicker";
 import { FontPicker } from "../components/FontPicker/FontPicker";
+import { IconPicker } from "../components/IconPicker";
+import type { StoreActionType } from "../store";
+import type { AppClassProperties, AppState, Primitive } from "../types";
 // TODO barnabasmolnar/editor-redesign
 // TextAlignTopIcon, TextAlignBottomIcon,TextAlignMiddleIcon,
 // ArrowHead icons
+import type { LocalPoint } from "../../math";
+import { pointFrom, vector } from "../../math";
+import { AreaTypePicker } from "../components/ColorPicker/AreaTypePicker";
 import {
   ArrowheadArrowIcon,
   ArrowheadBarIcon,
   ArrowheadCircleIcon,
-  ArrowheadTriangleIcon,
-  ArrowheadNoneIcon,
-  StrokeStyleDashedIcon,
-  StrokeStyleDottedIcon,
-  TextAlignTopIcon,
-  TextAlignBottomIcon,
-  TextAlignMiddleIcon,
-  FillHachureIcon,
-  FillCrossHatchIcon,
-  FillSolidIcon,
-  SloppinessArchitectIcon,
-  SloppinessArtistIcon,
-  SloppinessCartoonistIcon,
-  StrokeWidthBaseIcon,
-  StrokeWidthBoldIcon,
-  StrokeWidthExtraBoldIcon,
-  FontSizeSmallIcon,
-  FontSizeMediumIcon,
-  FontSizeLargeIcon,
-  FontSizeExtraLargeIcon,
-  EdgeSharpIcon,
-  EdgeRoundIcon,
-  TextAlignLeftIcon,
-  TextAlignCenterIcon,
-  TextAlignRightIcon,
-  FillZigZagIcon,
-  ArrowheadTriangleOutlineIcon,
   ArrowheadCircleOutlineIcon,
-  ArrowheadDiamondIcon,
-  ArrowheadDiamondOutlineIcon,
-  fontSizeIcon,
-  sharpArrowIcon,
-  roundArrowIcon,
-  elbowArrowIcon,
   ArrowheadCrowfootIcon,
   ArrowheadCrowfootOneIcon,
   ArrowheadCrowfootOneOrManyIcon,
+  ArrowheadDiamondIcon,
+  ArrowheadDiamondOutlineIcon,
+  ArrowheadNoneIcon,
+  ArrowheadTriangleIcon,
+  ArrowheadTriangleOutlineIcon,
+  EdgeRoundIcon,
+  EdgeSharpIcon,
+  elbowArrowIcon,
+  FillCrossHatchIcon,
+  FillHachureIcon,
+  FillSolidIcon,
+  FillZigZagIcon,
+  FontSizeExtraLargeIcon,
+  fontSizeIcon,
+  FontSizeLargeIcon,
+  FontSizeMediumIcon,
+  FontSizeSmallIcon,
+  roundArrowIcon,
+  sharpArrowIcon,
+  SloppinessArchitectIcon,
+  SloppinessArtistIcon,
+  SloppinessCartoonistIcon,
+  StrokeStyleDashedIcon,
+  StrokeStyleDottedIcon,
+  StrokeWidthBaseIcon,
+  StrokeWidthBoldIcon,
+  StrokeWidthExtraBoldIcon,
+  TextAlignBottomIcon,
+  TextAlignCenterIcon,
+  TextAlignLeftIcon,
+  TextAlignMiddleIcon,
+  TextAlignRightIcon,
+  TextAlignTopIcon,
 } from "../components/icons";
 import {
   ARROW_TYPE,
@@ -71,7 +74,15 @@ import {
   isTextElement,
   redrawTextBoundingBox,
 } from "../element";
+import {
+  bindLinearElement,
+  bindPointToSnapToElementOutline,
+  calculateFixedPointForElbowArrowBinding,
+  getHoveredElementForBinding,
+} from "../element/binding";
+import { LinearElementEditor } from "../element/linearElementEditor";
 import { mutateElement, newElementWith } from "../element/mutateElement";
+import { mutateElbowArrow } from "../element/routing";
 import { getBoundTextElement } from "../element/textElement";
 import {
   isArrowElement,
@@ -90,6 +101,7 @@ import type {
   TextAlign,
   VerticalAlign,
 } from "../element/types";
+import { Fonts, getLineHeight } from "../fonts";
 import { getLanguage, t } from "../i18n";
 import { KEYS } from "../keys";
 import { randomInteger } from "../random";
@@ -101,6 +113,7 @@ import {
   isSomeElementSelected,
 } from "../scene";
 import { hasStrokeColor } from "../scene/comparisons";
+import { StoreAction } from "../store";
 import {
   arrayToMap,
   getFontFamilyString,
@@ -108,18 +121,6 @@ import {
   tupleToCoors,
 } from "../utils";
 import { register } from "./register";
-import { StoreAction } from "../store";
-import { Fonts, getLineHeight } from "../fonts";
-import {
-  bindLinearElement,
-  bindPointToSnapToElementOutline,
-  calculateFixedPointForElbowArrowBinding,
-  getHoveredElementForBinding,
-} from "../element/binding";
-import { mutateElbowArrow } from "../element/routing";
-import { LinearElementEditor } from "../element/linearElementEditor";
-import type { LocalPoint } from "../../math";
-import { pointFrom, vector } from "../../math";
 
 const FONT_SIZE_RELATIVE_INCREASE_STEP = 0.1;
 
@@ -314,9 +315,55 @@ export const actionChangeStrokeColor = register({
   ),
 });
 
-export const actionChangeBackgroundColor = register({
-  name: "changeBackgroundColor",
-  label: "labels.changeBackground",
+// export const actionChangeBackgroundColor = register({
+//   name: "changeBackgroundColor",
+//   label: "labels.changeBackground",
+//   trackEvent: false,
+//   perform: (elements, appState, value) => {
+//     return {
+//       ...(value.currentItemBackgroundColor && {
+//         elements: changeProperty(elements, appState, (el) =>
+//           newElementWith(el, {
+//             backgroundColor: value.currentItemBackgroundColor,
+//           }),
+//         ),
+//       }),
+//       appState: {
+//         ...appState,
+//         ...value,
+//       },
+//       storeAction: !!value.currentItemBackgroundColor
+//         ? StoreAction.CAPTURE
+//         : StoreAction.NONE,
+//     };
+//   },
+//   PanelComponent: ({ elements, appState, updateData, appProps }) => (
+//     <>
+//       <h3 aria-hidden="true">{t("labels.background")}</h3>
+//       <ColorPicker
+//         topPicks={DEFAULT_ELEMENT_BACKGROUND_PICKS}
+//         palette={DEFAULT_ELEMENT_BACKGROUND_COLOR_PALETTE}
+//         type="elementBackground"
+//         label={t("labels.background")}
+//         color={getFormValue(
+//           elements,
+//           appState,
+//           (element) => element.backgroundColor,
+//           true,
+//           appState.currentItemBackgroundColor,
+//         )}
+//         onChange={(color) => updateData({ currentItemBackgroundColor: color })}
+//         elements={elements}
+//         appState={appState}
+//         updateData={updateData}
+//       />
+//     </>
+//   ),
+// });
+
+export const actionChangeAreaType = register({
+  name: "changeAreaType",
+  label: "Change Area Type",
   trackEvent: false,
   perform: (elements, appState, value) => {
     return {
@@ -338,12 +385,12 @@ export const actionChangeBackgroundColor = register({
   },
   PanelComponent: ({ elements, appState, updateData, appProps }) => (
     <>
-      <h3 aria-hidden="true">{t("labels.background")}</h3>
-      <ColorPicker
+      <h3 aria-hidden="true">{"Change Area Type"}</h3>
+      <AreaTypePicker
         topPicks={DEFAULT_ELEMENT_BACKGROUND_PICKS}
         palette={DEFAULT_ELEMENT_BACKGROUND_COLOR_PALETTE}
         type="elementBackground"
-        label={t("labels.background")}
+        label="skibidi"
         color={getFormValue(
           elements,
           appState,

@@ -1,65 +1,65 @@
+import clsx from "clsx";
+import fuzzy from "fuzzy";
+import { atom, useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
+import {
+  actionClearCanvas,
+  actionLink,
+  actionToggleSearchMenu,
+} from "../../actions";
+import type { ShortcutName } from "../../actions/shortcuts";
+import { getShortcutFromShortcutName } from "../../actions/shortcuts";
+import type { Action } from "../../actions/types";
+import { trackEvent } from "../../analytics";
+import { DEFAULT_SIDEBAR, EVENT } from "../../constants";
+import { useUIAppState } from "../../context/ui-appState";
+import { deburr } from "../../deburr";
+import { useStable } from "../../hooks/useStable";
+import { useStableCallback } from "../../hooks/useStableCallback";
+import type { TranslationKeys } from "../../i18n";
+import { t } from "../../i18n";
+import { jotaiStore } from "../../jotai";
+import { KEYS } from "../../keys";
+import { getSelectedElements } from "../../scene";
+import { SHAPES } from "../../shapes";
+import type { AppProps, AppState, UIAppState } from "../../types";
+import type { MarkRequired } from "../../utility-types";
+import {
+  capitalizeString,
+  getShortcutKey,
+  isWritableElement,
+} from "../../utils";
+import { canChangeBackgroundColor, canChangeStrokeColor } from "../Actions";
+import { activeConfirmDialogAtom } from "../ActiveConfirmDialog";
 import {
   useApp,
   useAppProps,
   useExcalidrawActionManager,
   useExcalidrawSetAppState,
 } from "../App";
-import { KEYS } from "../../keys";
 import { Dialog } from "../Dialog";
-import { TextField } from "../TextField";
-import clsx from "clsx";
-import { getSelectedElements } from "../../scene";
-import type { Action } from "../../actions/types";
-import type { TranslationKeys } from "../../i18n";
-import { t } from "../../i18n";
-import type { ShortcutName } from "../../actions/shortcuts";
-import { getShortcutFromShortcutName } from "../../actions/shortcuts";
-import { DEFAULT_SIDEBAR, EVENT } from "../../constants";
 import {
-  LockedIcon,
-  UnlockedIcon,
-  clockIcon,
-  searchIcon,
   boltIcon,
-  bucketFillIcon,
-  ExportImageIcon,
-  mermaidLogoIcon,
   brainIconThin,
+  bucketFillIcon,
+  clockIcon,
+  ExportImageIcon,
   LibraryIcon,
+  LockedIcon,
+  mermaidLogoIcon,
+  searchIcon,
+  UnlockedIcon,
 } from "../icons";
-import fuzzy from "fuzzy";
-import { useUIAppState } from "../../context/ui-appState";
-import type { AppProps, AppState, UIAppState } from "../../types";
-import {
-  capitalizeString,
-  getShortcutKey,
-  isWritableElement,
-} from "../../utils";
-import { atom, useAtom } from "jotai";
-import { deburr } from "../../deburr";
-import type { MarkRequired } from "../../utility-types";
 import { InlineIcon } from "../InlineIcon";
-import { SHAPES } from "../../shapes";
-import { canChangeBackgroundColor, canChangeStrokeColor } from "../Actions";
-import { useStableCallback } from "../../hooks/useStableCallback";
-import {
-  actionClearCanvas,
-  actionLink,
-  actionToggleSearchMenu,
-} from "../../actions";
-import { jotaiStore } from "../../jotai";
-import { activeConfirmDialogAtom } from "../ActiveConfirmDialog";
-import type { CommandPaletteItem } from "./types";
+import { TextField } from "../TextField";
 import * as defaultItems from "./defaultCommandPaletteItems";
-import { trackEvent } from "../../analytics";
-import { useStable } from "../../hooks/useStable";
+import type { CommandPaletteItem } from "./types";
 
-import "./CommandPalette.scss";
 import {
   actionCopyElementLink,
   actionLinkToElement,
 } from "../../actions/actionElementLink";
+import "./CommandPalette.scss";
 
 const lastUsedPaletteItem = atom<CommandPaletteItem | null>(null);
 
@@ -423,8 +423,28 @@ function CommandPaletteInner({
             }));
           },
         },
+        // {
+        //   label: t("labels.changeBackground"),
+        //   keywords: ["color", "fill"],
+        //   icon: bucketFillIcon,
+        //   category: DEFAULT_CATEGORIES.elements,
+        //   viewMode: false,
+        //   predicate: (elements, appState) => {
+        //     const selectedElements = getSelectedElements(elements, appState);
+        //     return (
+        //       selectedElements.length > 0 &&
+        //       canChangeBackgroundColor(appState, selectedElements)
+        //     );
+        //   },
+        //   perform: () => {
+        //     setAppState((prevState) => ({
+        //       openMenu: prevState.openMenu === "shape" ? null : "shape",
+        //       openPopup: "elementBackground",
+        //     }));
+        //   },
+        // },
         {
-          label: t("labels.changeBackground"),
+          label: "Change Area Type",
           keywords: ["color", "fill"],
           icon: bucketFillIcon,
           category: DEFAULT_CATEGORIES.elements,

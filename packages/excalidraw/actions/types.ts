@@ -3,14 +3,14 @@ import type {
   ExcalidrawElement,
   OrderedExcalidrawElement,
 } from "../element/types";
+import type { StoreActionType } from "../store";
 import type {
   AppClassProperties,
   AppState,
-  ExcalidrawProps,
   BinaryFiles,
+  ExcalidrawProps,
   UIAppState,
 } from "../types";
-import type { StoreActionType } from "../store";
 
 export type ActionSource =
   | "ui"
@@ -59,6 +59,7 @@ export type ActionName =
   | "objectsSnapMode"
   | "stats"
   | "changeStrokeColor"
+  | "changeAreaType"
   | "changeBackgroundColor"
   | "changeFillStyle"
   | "changeStrokeWidth"
