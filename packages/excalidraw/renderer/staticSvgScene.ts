@@ -8,6 +8,7 @@ import {
 } from "../constants";
 import { normalizeLink, toValidURL } from "../data/url";
 import { getElementAbsoluteCoords, hashString } from "../element";
+import { getUncroppedWidthAndHeight } from "../element/cropElement";
 import {
   createPlaceholderEmbeddableLabel,
   getEmbedLink,
@@ -29,15 +30,14 @@ import type {
   ExcalidrawTextElementWithContainer,
   NonDeletedExcalidrawElement,
 } from "../element/types";
+import { getVerticalOffset } from "../fonts";
 import { getContainingFrame } from "../frame";
 import { ShapeCache } from "../scene/ShapeCache";
 import type { RenderableElementsMap, SVGRenderConfig } from "../scene/types";
-import type { AppState, BinaryFiles } from "../types";
-import { getFontFamilyString, isRTL, isTestEnv } from "../utils";
-import { getFreeDrawSvgPath, IMAGE_INVERT_FILTER } from "./renderElement";
-import { getVerticalOffset } from "../fonts";
 import { getCornerRadius, isPathALoop } from "../shapes";
-import { getUncroppedWidthAndHeight } from "../element/cropElement";
+import type { AppState, BinaryFiles } from "../types";
+import { getFontFamilyString, isRTL } from "../utils";
+import { getFreeDrawSvgPath, IMAGE_INVERT_FILTER } from "./renderElement";
 
 const roughSVGDrawWithPrecision = (
   rsvg: RoughSVG,
@@ -120,9 +120,10 @@ const renderElementToSvg = (
   }
 
   const addToRoot = (node: SVGElement, element: ExcalidrawElement) => {
-    if (isTestEnv()) {
-      node.setAttribute("data-id", element.id);
-    }
+    console.log(`setting id as data-id:${element.id}`);
+    // if (isTestEnv()) {
+    node.setAttribute("data-id", element.id);
+    // }
     root.appendChild(node);
   };
 
