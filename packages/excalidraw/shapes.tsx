@@ -1,7 +1,7 @@
 import {
   isPoint,
-  pointFrom,
   pointDistance,
+  pointFrom,
   pointFromPair,
   pointRotateRads,
   pointsEqual,
@@ -23,7 +23,6 @@ import {
   EllipseIcon,
   EraserIcon,
   FreedrawIcon,
-  ImageIcon,
   LineIcon,
   RectangleIcon,
   SelectionIcon,
@@ -108,18 +107,18 @@ export const SHAPES = [
     numericKey: KEYS["8"],
     fillable: false,
   },
-  {
-    icon: ImageIcon,
-    value: "image",
-    key: null,
-    numericKey: KEYS["9"],
-    fillable: false,
-  },
+  // {
+  //   icon: ImageIcon,
+  //   value: "image",
+  //   key: null,
+  //   numericKey: KEYS["9"],
+  //   fillable: false,
+  // },
   {
     icon: EraserIcon,
     value: "eraser",
     key: KEYS.E,
-    numericKey: KEYS["0"],
+    numericKey: KEYS["9"],
     fillable: false,
   },
 ] as const;

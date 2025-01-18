@@ -40,17 +40,7 @@ import { Tooltip } from "./Tooltip";
 
 import { CLASSES } from "../constants";
 import { useTunnels } from "../context/tunnels";
-import { KEYS } from "../keys";
 import "./Actions.scss";
-import DropdownMenu from "./dropdownMenu/DropdownMenu";
-import {
-  EmbedIcon,
-  extraToolsIcon,
-  frameToolIcon,
-  laserPointerToolIcon,
-  MagicIcon,
-  mermaidLogoIcon,
-} from "./icons";
 
 export const canChangeStrokeColor = (
   appState: UIAppState,
@@ -321,21 +311,21 @@ export const ShapesSwitcher = ({
               if (appState.activeTool.type !== value) {
                 trackEvent("toolbar", value, "ui");
               }
-              if (value === "image") {
-                app.setActiveTool({
-                  type: value,
-                  insertOnCanvasDirectly: pointerType !== "mouse",
-                });
-              } else {
-                app.setActiveTool({ type: value });
-              }
+              // if (value === "image") {
+              //   app.setActiveTool({
+              //     type: value,
+              //     insertOnCanvasDirectly: pointerType !== "mouse",
+              //   });
+              // } else {
+              app.setActiveTool({ type: value });
+              // }
             }}
           />
         );
       })}
-      <div className="App-toolbar__divider" />
+      {/* <div className="App-toolbar__divider" /> */}
 
-      <DropdownMenu open={isExtraToolsMenuOpen}>
+      {/* <DropdownMenu open={isExtraToolsMenuOpen}>
         <DropdownMenu.Trigger
           className={clsx("App-toolbar__extra-tools-trigger", {
             "App-toolbar__extra-tools-trigger--selected":
@@ -425,7 +415,7 @@ export const ShapesSwitcher = ({
             </>
           )}
         </DropdownMenu.Content>
-      </DropdownMenu>
+      </DropdownMenu> */}
     </>
   );
 };

@@ -226,6 +226,8 @@ export {
 } from "./element";
 export { defaultLang, languages, useI18n } from "./i18n";
 
+export type { BinaryFiles, ExcalidrawImperativeAPI } from "./types";
+
 export { reconcileElements } from "./data/reconcile";
 
 export {

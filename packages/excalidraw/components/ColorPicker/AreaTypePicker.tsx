@@ -136,8 +136,6 @@ export const AreaTypePicker = ({
   appState,
   barnTranslations,
 }: ColorPickerProps) => {
-  console.log(`1: ${barnTranslations}`);
-
   return (
     <div>
       <div role="dialog" aria-modal="true" className="color-picker-container">

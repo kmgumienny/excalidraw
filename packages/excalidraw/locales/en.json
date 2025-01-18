@@ -629,5 +629,8 @@
     },
     "itemNotAvailable": "Command is not available...",
     "shortcutHint": "For Command palette, use {{shortcut}}"
+  },
+  "barn": {
+    "area_type": "Area Type"
   }
 }

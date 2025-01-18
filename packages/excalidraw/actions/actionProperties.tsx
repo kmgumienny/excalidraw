@@ -361,7 +361,7 @@ export const actionChangeStrokeColor = register({
 // });
 export const actionChangeAreaType = register({
   name: "changeAreaType",
-  label: "Change Area Type",
+  label: t("barn.area_type"),
   trackEvent: false,
   perform: (elements, appState, value) => {
     return {
@@ -383,12 +383,20 @@ export const actionChangeAreaType = register({
   },
   PanelComponent: ({ elements, appState, updateData, appProps }) => (
     <>
-      <h3 aria-hidden="true">{"Change Area Type"}</h3>
+      <h3 aria-hidden="true">
+        {appProps.optionalTranslations
+          ? appProps.optionalTranslations["area_type"]
+          : "area_type"}
+      </h3>
       <AreaTypePicker
         topPicks={DEFAULT_ELEMENT_BACKGROUND_PICKS}
         palette={DEFAULT_ELEMENT_BACKGROUND_COLOR_PALETTE}
         type="elementBackground"
-        label="skibidi"
+        label={
+          appProps.optionalTranslations
+            ? appProps.optionalTranslations["area_type"]
+            : "area_type"
+        }
         color={getFormValue(
           elements,
           appState,
