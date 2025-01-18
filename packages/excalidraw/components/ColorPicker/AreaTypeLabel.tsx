@@ -12,7 +12,6 @@ const AreaTypeHotkeyLabel = ({
   isCustomColor = false,
   isShade = false,
 }: HotkeyLabelProps) => {
-  console.log(`color: ${color} label:${keyLabel}`);
   return (
     <div
       className="color-picker__button__hotkey-label"

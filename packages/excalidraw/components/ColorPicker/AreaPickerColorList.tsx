@@ -17,6 +17,7 @@ interface PickerColorListProps {
   onChange: (color: string) => void;
   label: string;
   activeShade: number;
+  barnTranslations?: Record<string, string>;
 }
 
 const AreaPickerColorList = ({
@@ -25,6 +26,7 @@ const AreaPickerColorList = ({
   onChange,
   label,
   activeShade,
+  barnTranslations,
 }: PickerColorListProps) => {
   const colorObj = getColorNameAndShadeFromColor({
     color: color || "transparent",
@@ -45,36 +47,42 @@ const AreaPickerColorList = ({
   const getAreaTypeFromColor = (color: string) => {
     switch (color) {
       case "transparent":
-        return "none";
+        return barnTranslations ? barnTranslations["none"] : "none";
       case "#fcb27c":
-        return "stall";
+        return barnTranslations ? barnTranslations["stall"] : "stall";
       case "#e9ecef":
-        return "tack room";
+        return barnTranslations ? barnTranslations["tack_room"] : "tack_room";
       case "#1e1e1e":
-        return "pasture";
+        return barnTranslations ? barnTranslations["pasture"] : "pasture";
       case "#eaddd7":
-        return "dry lot";
+        return barnTranslations ? barnTranslations["dry_lot"] : "dry_lot";
       case "#99e9f2":
-        return "storage";
+        return barnTranslations ? barnTranslations["storage"] : "storage";
       case "#a5d8ff":
-        return "feed room";
+        return barnTranslations ? barnTranslations["feed_room"] : "feed_room";
       case "#d0bfff":
-        return "outdoor arena";
+        return barnTranslations
+          ? barnTranslations["outdoor_arena"]
+          : "outdoor_arena";
       case "#eebefa":
-        return "indoor arena";
+        return barnTranslations
+          ? barnTranslations["indoor_arena"]
+          : "indoor_arena";
       case "#fcc2d7":
-        return "restroom";
+        return barnTranslations ? barnTranslations["restroom"] : "restroom";
       case "#b2f2bb":
-        return "office";
+        return barnTranslations ? barnTranslations["office"] : "office";
       case "#96f2d7":
-        return "wash rack";
+        return barnTranslations ? barnTranslations["wash_rack"] : "wash_rack";
       case "#ffec99":
-        return "trail access";
+        return barnTranslations
+          ? barnTranslations["trail_access"]
+          : "trail_access";
       case "#ffd8a8":
-        return "round pen";
+        return barnTranslations ? barnTranslations["round_pen"] : "round_pen";
       case "#ffc9c9":
       default:
-        return "lounge";
+        return barnTranslations ? barnTranslations["lounge"] : "lounge";
     }
   };
 

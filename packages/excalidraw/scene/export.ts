@@ -380,7 +380,6 @@ export const exportToSvg = async (
         "clipPath",
       );
 
-      console.log(`setting frame id attribute apparently?? id: ${frame.id}`);
       clipPath.setAttribute("id", frame.id);
 
       const [x1, y1, x2, y2] = getElementAbsoluteCoords(frame, elementsMap);

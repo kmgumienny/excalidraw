@@ -1,46 +1,46 @@
 import type React from "react";
+import type { Action } from "./actions/types";
+import type { Spreadsheet } from "./charts";
+import type { ClipboardData } from "./clipboard";
+import type App from "./components/App";
+import type { ContextMenuItems } from "./components/ContextMenu";
+import type { IMAGE_MIME_TYPES, MIME_TYPES } from "./constants";
+import type { FileSystemHandle } from "./data/filesystem";
+import type Library from "./data/library";
+import type { ImportedDataState } from "./data/types";
+import type { SuggestedBinding } from "./element/binding";
+import type { LinearElementEditor } from "./element/linearElementEditor";
+import type { MaybeTransformHandleType } from "./element/transformHandles";
 import type {
-  PointerType,
-  ExcalidrawLinearElement,
-  NonDeletedExcalidrawElement,
-  NonDeleted,
-  TextAlign,
-  ExcalidrawElement,
-  GroupId,
-  ExcalidrawBindableElement,
   Arrowhead,
   ChartType,
-  FontFamilyValues,
-  FileId,
-  ExcalidrawImageElement,
-  Theme,
-  StrokeRoundness,
-  ExcalidrawEmbeddableElement,
-  ExcalidrawMagicFrameElement,
-  ExcalidrawFrameLikeElement,
+  ExcalidrawBindableElement,
+  ExcalidrawElement,
   ExcalidrawElementType,
+  ExcalidrawEmbeddableElement,
+  ExcalidrawFrameLikeElement,
   ExcalidrawIframeLikeElement,
-  OrderedExcalidrawElement,
+  ExcalidrawImageElement,
+  ExcalidrawLinearElement,
+  ExcalidrawMagicFrameElement,
   ExcalidrawNonSelectionElement,
+  FileId,
+  FontFamilyValues,
+  GroupId,
+  NonDeleted,
+  NonDeletedExcalidrawElement,
+  OrderedExcalidrawElement,
+  PointerType,
+  StrokeRoundness,
+  TextAlign,
+  Theme,
 } from "./element/types";
-import type { Action } from "./actions/types";
-import type { LinearElementEditor } from "./element/linearElementEditor";
-import type { SuggestedBinding } from "./element/binding";
-import type { ImportedDataState } from "./data/types";
-import type App from "./components/App";
-import type { throttleRAF } from "./utils";
-import type { Spreadsheet } from "./charts";
 import type { Language } from "./i18n";
-import type { ClipboardData } from "./clipboard";
 import type { isOverScrollBars } from "./scene/scrollbars";
-import type { MaybeTransformHandleType } from "./element/transformHandles";
-import type Library from "./data/library";
-import type { FileSystemHandle } from "./data/filesystem";
-import type { IMAGE_MIME_TYPES, MIME_TYPES } from "./constants";
-import type { ContextMenuItems } from "./components/ContextMenu";
 import type { SnapLine } from "./snapping";
-import type { Merge, MaybePromise, ValueOf, MakeBrand } from "./utility-types";
 import type { StoreActionType } from "./store";
+import type { MakeBrand, MaybePromise, Merge, ValueOf } from "./utility-types";
+import type { throttleRAF } from "./utils";
 
 export type SocketId = string & { _brand: "SocketId" };
 
@@ -565,6 +565,7 @@ export interface ExcalidrawProps {
   ) => JSX.Element | null;
   aiEnabled?: boolean;
   showDeprecatedFonts?: boolean;
+  optionalTranslations?: Record<string, string>;
 }
 
 export type SceneData = {

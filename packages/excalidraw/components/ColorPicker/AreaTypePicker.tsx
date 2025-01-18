@@ -45,6 +45,7 @@ interface ColorPickerProps {
   palette?: ColorPaletteCustom | null;
   topPicks?: ColorTuple;
   updateData: (formData?: any) => void;
+  barnTranslations?: Record<string, string>;
 }
 
 const AreaColorPickerPopupContent = ({
@@ -55,6 +56,7 @@ const AreaColorPickerPopupContent = ({
   elements,
   palette = COLOR_PALETTE,
   updateData,
+  barnTranslations,
 }: Pick<
   ColorPickerProps,
   | "type"
@@ -64,6 +66,7 @@ const AreaColorPickerPopupContent = ({
   | "elements"
   | "palette"
   | "updateData"
+  | "barnTranslations"
 >) => {
   const { container } = useExcalidrawContainer();
   const [, setActiveColorPickerSection] = useAtom(activeColorPickerSectionAtom);
@@ -120,6 +123,7 @@ const AreaColorPickerPopupContent = ({
       type={type}
       elements={elements}
       updateData={updateData}
+      barnTranslations={barnTranslations}
     />
   );
 };

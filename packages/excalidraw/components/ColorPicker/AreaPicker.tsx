@@ -31,6 +31,7 @@ interface PickerProps {
   children?: React.ReactNode;
   onEyeDropperToggle: (force?: boolean) => void;
   onEscape: (event: React.KeyboardEvent | KeyboardEvent) => void;
+  barnTranslations?: Record<string, string>;
 }
 
 export const AreaPicker = ({
@@ -44,6 +45,7 @@ export const AreaPicker = ({
   children,
   onEyeDropperToggle,
   onEscape,
+  barnTranslations,
 }: PickerProps) => {
   const [customColors] = React.useState(() => {
     if (type === "canvasBackground") {
@@ -160,6 +162,7 @@ export const AreaPicker = ({
             palette={palette}
             onChange={onChange}
             activeShade={activeShade}
+            barnTranslations={barnTranslations}
           />
         </div>
 
