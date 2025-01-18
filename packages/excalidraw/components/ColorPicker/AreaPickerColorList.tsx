@@ -57,7 +57,9 @@ const AreaPickerColorList = ({
       case "#eaddd7":
         return barnTranslations ? barnTranslations["dry_lot"] : "dry_lot";
       case "#99e9f2":
-        return barnTranslations ? barnTranslations["storage"] : "storage";
+        return barnTranslations
+          ? barnTranslations["storage_room"]
+          : "storage_room";
       case "#a5d8ff":
         return barnTranslations ? barnTranslations["feed_room"] : "feed_room";
       case "#d0bfff":
@@ -75,9 +77,7 @@ const AreaPickerColorList = ({
       case "#96f2d7":
         return barnTranslations ? barnTranslations["wash_rack"] : "wash_rack";
       case "#ffec99":
-        return barnTranslations
-          ? barnTranslations["trail_access"]
-          : "trail_access";
+        return barnTranslations ? barnTranslations["trail"] : "trail";
       case "#ffd8a8":
         return barnTranslations ? barnTranslations["round_pen"] : "round_pen";
       case "#ffc9c9":

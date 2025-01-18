@@ -134,7 +134,10 @@ export const AreaTypePicker = ({
   topPicks,
   updateData,
   appState,
+  barnTranslations,
 }: ColorPickerProps) => {
+  console.log(`1: ${barnTranslations}`);
+
   return (
     <div>
       <div role="dialog" aria-modal="true" className="color-picker-container">
@@ -146,6 +149,7 @@ export const AreaTypePicker = ({
           elements={elements}
           palette={palette}
           updateData={updateData}
+          barnTranslations={barnTranslations}
         />
       </div>
     </div>
