@@ -7,20 +7,10 @@ import {
   actionLink,
   actionToggleSearchMenu,
 } from "../../actions";
-import type { ShortcutName } from "../../actions/shortcuts";
-import { getShortcutFromShortcutName } from "../../actions/shortcuts";
-import type { Action } from "../../actions/types";
-import { trackEvent } from "../../analytics";
-import { DEFAULT_SIDEBAR, EVENT } from "../../constants";
 import { useUIAppState } from "../../context/ui-appState";
 import { deburr } from "../../deburr";
-import { useStable } from "../../hooks/useStable";
+import { editorJotaiStore } from "../../editor-jotai";
 import { useStableCallback } from "../../hooks/useStableCallback";
-import type { TranslationKeys } from "../../i18n";
-import { t } from "../../i18n";
-import { jotaiStore } from "../../jotai";
-import { KEYS } from "../../keys";
-import { getSelectedElements } from "../../scene";
 import { SHAPES } from "../../shapes";
 import type { AppProps, AppState, UIAppState } from "../../types";
 import type { MarkRequired } from "../../utility-types";
@@ -59,6 +49,17 @@ import {
   actionCopyElementLink,
   actionLinkToElement,
 } from "../../actions/actionElementLink";
+import {
+  getShortcutFromShortcutName,
+  ShortcutName,
+} from "../../actions/shortcuts";
+import { Action } from "../../actions/types";
+import { trackEvent } from "../../analytics";
+import { DEFAULT_SIDEBAR, EVENT } from "../../constants";
+import { useStable } from "../../hooks/useStable";
+import { t, TranslationKeys } from "../../i18n";
+import { KEYS } from "../../keys";
+import { getSelectedElements } from "../../scene";
 import "./CommandPalette.scss";
 
 const lastUsedPaletteItem = atom<CommandPaletteItem | null>(null);
@@ -349,7 +350,7 @@ function CommandPaletteInner({
           keywords: ["delete", "destroy"],
           viewMode: false,
           perform: () => {
-            jotaiStore.set(activeConfirmDialogAtom, "clearCanvas");
+            editorJotaiStore.set(activeConfirmDialogAtom, "clearCanvas");
           },
         },
         {

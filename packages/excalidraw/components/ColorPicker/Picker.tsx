@@ -4,11 +4,14 @@ import { t } from "../../i18n";
 import type { ExcalidrawElement } from "../../element/types";
 import { ShadeList } from "./ShadeList";
 
-import PickerColorList from "./PickerColorList";
-import { useAtom } from "jotai";
-import { CustomColorList } from "./CustomColorList";
-import { colorPickerKeyNavHandler } from "./keyboardNavHandlers";
-import PickerHeading from "./PickerHeading";
+import type { ColorPaletteCustom } from "../../colors";
+import {
+  DEFAULT_ELEMENT_BACKGROUND_COLOR_INDEX,
+  DEFAULT_ELEMENT_STROKE_COLOR_INDEX,
+} from "../../colors";
+import { EVENT } from "../../constants";
+import { useAtom } from "../../editor-jotai";
+import { KEYS } from "../../keys";
 import type { ColorPickerType } from "./colorPickerUtils";
 import {
   activeColorPickerSectionAtom,
@@ -16,13 +19,10 @@ import {
   getMostUsedCustomColors,
   isCustomColor,
 } from "./colorPickerUtils";
-import type { ColorPaletteCustom } from "../../colors";
-import {
-  DEFAULT_ELEMENT_BACKGROUND_COLOR_INDEX,
-  DEFAULT_ELEMENT_STROKE_COLOR_INDEX,
-} from "../../colors";
-import { KEYS } from "../../keys";
-import { EVENT } from "../../constants";
+import { CustomColorList } from "./CustomColorList";
+import { colorPickerKeyNavHandler } from "./keyboardNavHandlers";
+import PickerColorList from "./PickerColorList";
+import PickerHeading from "./PickerHeading";
 
 interface PickerProps {
   color: string;

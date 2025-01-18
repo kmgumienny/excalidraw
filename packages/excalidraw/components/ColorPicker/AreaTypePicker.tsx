@@ -3,7 +3,6 @@ import { useRef } from "react";
 import type { ColorPaletteCustom, ColorTuple } from "../../colors";
 import { COLOR_PALETTE } from "../../colors";
 import type { ExcalidrawElement } from "../../element/types";
-import { jotaiScope } from "../../jotai";
 import type { AppState } from "../../types";
 import { isTransparent } from "../../utils";
 import { useExcalidrawContainer } from "../App";
@@ -71,10 +70,7 @@ const AreaColorPickerPopupContent = ({
   const { container } = useExcalidrawContainer();
   const [, setActiveColorPickerSection] = useAtom(activeColorPickerSectionAtom);
 
-  const [eyeDropperState, setEyeDropperState] = useAtom(
-    activeEyeDropperAtom,
-    jotaiScope,
-  );
+  const [eyeDropperState, setEyeDropperState] = useAtom(activeEyeDropperAtom);
 
   const popoverRef = useRef<HTMLDivElement>(null);
 

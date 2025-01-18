@@ -2,7 +2,6 @@ export { actionDeleteSelected } from "./actionDeleteSelected";
 export { actionDuplicateSelection } from "./actionDuplicateSelection";
 export {
   actionChangeAreaType,
-  // actionChangeBackgroundColor,
   actionChangeFillStyle,
   actionChangeFontFamily,
   actionChangeFontSize,
