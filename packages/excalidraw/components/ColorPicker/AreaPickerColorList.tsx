@@ -44,63 +44,57 @@ const AreaPickerColorList = ({
     }
   }, [colorObj?.colorName, activeColorPickerSection]);
 
-  const getAreaTypeFromColor = (color: string) => {
-    switch (color) {
+  const getAreaTypeFromColor = (key: string) => {
+    switch (key) {
       case "transparent":
         return barnTranslations ? barnTranslations["none"] : "none";
-      case "#fcb27c":
+      case "a":
         return barnTranslations ? barnTranslations["stall"] : "stall";
-      case "#e9ecef":
+      case "b":
         return barnTranslations ? barnTranslations["tack_room"] : "tack_room";
-      case "#1e1e1e":
+      case "c":
         return barnTranslations ? barnTranslations["pasture"] : "pasture";
-      case "#eaddd7":
+      case "d":
         return barnTranslations ? barnTranslations["dry_lot"] : "dry_lot";
-      case "#99e9f2":
+      case "e":
         return barnTranslations
           ? barnTranslations["storage_room"]
           : "storage_room";
-      case "#a5d8ff":
+      case "f":
         return barnTranslations ? barnTranslations["feed_room"] : "feed_room";
-      case "#d0bfff":
+      case "g":
         return barnTranslations
           ? barnTranslations["outdoor_arena"]
           : "outdoor_arena";
-      case "#eebefa":
+      case "h":
         return barnTranslations
           ? barnTranslations["indoor_arena"]
           : "indoor_arena";
-      case "#fcc2d7":
+      case "i":
         return barnTranslations ? barnTranslations["restroom"] : "restroom";
-      case "#b2f2bb":
+      case "j":
         return barnTranslations ? barnTranslations["office"] : "office";
-      case "#96f2d7":
+      case "k":
         return barnTranslations ? barnTranslations["wash_rack"] : "wash_rack";
-      case "#ffec99":
+      case "l":
         return barnTranslations ? barnTranslations["trail"] : "trail";
-      case "#ffd8a8":
+      case "m":
         return barnTranslations ? barnTranslations["round_pen"] : "round_pen";
-      case "#8F9779":
+      case "n":
         return barnTranslations ? barnTranslations["parking"] : "parking";
-      case "#ffc9c9":
+      case "o":
       default:
         return barnTranslations ? barnTranslations["lounge"] : "lounge";
     }
   };
 
-  palette["gween"] = ["#4B5320", "#8F9779", "#87A96B", "#32de84", "#4FFFB0"];
+  // palette["gween"] = ["#4B5320", "#8F9779", "#87A96B", "#32de84", "#4FFFB0"];
 
   return (
     <div className="area-color-picker-content--default">
       {Object.entries(palette).map(([key, value], index) => {
         let color =
           (Array.isArray(value) ? value[activeShade] : value) || "transparent";
-
-        // no white, no zanks
-        if (color === "#ffffff") {
-          debugger;
-          color = "#fcb27c";
-        }
 
         const keybinding = colorPickerHotkeyBindings[index];
         const label = t(
@@ -134,7 +128,7 @@ const AreaPickerColorList = ({
             <div className="area-color-picker__button-outline" />
             <AreaTypeHotkeyLabel
               color={color}
-              keyLabel={getAreaTypeFromColor(color)}
+              keyLabel={getAreaTypeFromColor(key)}
             />
           </button>
         );

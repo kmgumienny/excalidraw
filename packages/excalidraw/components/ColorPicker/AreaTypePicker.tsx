@@ -1,7 +1,6 @@
 import { useAtom } from "jotai";
 import { useRef } from "react";
-import type { ColorPaletteCustom, ColorTuple } from "../../colors";
-import { COLOR_PALETTE } from "../../colors";
+import type { ColorTuple } from "../../colors";
 import type { ExcalidrawElement } from "../../element/types";
 import type { AppState } from "../../types";
 import { isTransparent } from "../../utils";
@@ -41,7 +40,6 @@ interface ColorPickerProps {
   label: string;
   elements: readonly ExcalidrawElement[];
   appState: AppState;
-  palette?: ColorPaletteCustom | null;
   topPicks?: ColorTuple;
   updateData: (formData?: any) => void;
   barnTranslations?: Record<string, string>;
@@ -53,7 +51,6 @@ const AreaColorPickerPopupContent = ({
   onChange,
   label,
   elements,
-  palette = COLOR_PALETTE,
   updateData,
   barnTranslations,
 }: Pick<
@@ -63,7 +60,6 @@ const AreaColorPickerPopupContent = ({
   | "onChange"
   | "label"
   | "elements"
-  | "palette"
   | "updateData"
   | "barnTranslations"
 >) => {
@@ -82,7 +78,6 @@ const AreaColorPickerPopupContent = ({
 
   return (
     <AreaPicker
-      palette={palette as ColorPaletteCustom}
       color={color}
       onChange={(changedColor) => {
         onChange(changedColor);
@@ -130,7 +125,6 @@ export const AreaTypePicker = ({
   onChange,
   label,
   elements,
-  palette = COLOR_PALETTE,
   topPicks,
   updateData,
   appState,
@@ -145,7 +139,6 @@ export const AreaTypePicker = ({
           onChange={onChange}
           label={label}
           elements={elements}
-          palette={palette}
           updateData={updateData}
           barnTranslations={barnTranslations}
         />

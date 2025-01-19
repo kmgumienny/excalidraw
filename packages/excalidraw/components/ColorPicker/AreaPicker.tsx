@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import type { ExcalidrawElement } from "../../element/types";
 
 import { useAtom } from "jotai";
-import type { ColorPaletteCustom } from "../../colors";
 import {
+  ColorPaletteCustom,
   DEFAULT_ELEMENT_BACKGROUND_COLOR_INDEX,
   DEFAULT_ELEMENT_STROKE_COLOR_INDEX,
 } from "../../colors";
@@ -26,7 +26,6 @@ interface PickerProps {
   label: string;
   type: ColorPickerType;
   elements: readonly ExcalidrawElement[];
-  palette: ColorPaletteCustom;
   updateData: (formData?: any) => void;
   children?: React.ReactNode;
   onEyeDropperToggle: (force?: boolean) => void;
@@ -40,13 +39,31 @@ export const AreaPicker = ({
   label,
   type,
   elements,
-  palette,
   updateData,
   children,
   onEyeDropperToggle,
   onEscape,
   barnTranslations,
 }: PickerProps) => {
+  const palette: ColorPaletteCustom = {
+    transparent: "transparent",
+    a: "#a5d8ff",
+    b: "#eaddd7",
+    c: "#FBEC65",
+    d: "#99e9f2",
+    e: "#eebefa",
+    f: "#e9ecef",
+    g: "#b2f2bb",
+    h: "#ffd8a8",
+    i: "#fcc2d7",
+    j: "#ffc9c9",
+    k: "#96f2d7",
+    l: "#d0bfff",
+    m: "#ffec99",
+    n: "#3BE8BD",
+    o: "#EAAA35",
+  };
+
   const [customColors] = React.useState(() => {
     if (type === "canvasBackground") {
       return [];
