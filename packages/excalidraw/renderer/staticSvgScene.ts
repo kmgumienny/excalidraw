@@ -120,10 +120,7 @@ const renderElementToSvg = (
   }
 
   const addToRoot = (node: SVGElement, element: ExcalidrawElement) => {
-    console.log(`setting id as data-id:${element.id}`);
-    // if (isTestEnv()) {
     node.setAttribute("data-id", element.id);
-    // }
     root.appendChild(node);
   };
 

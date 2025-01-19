@@ -80,11 +80,15 @@ const AreaPickerColorList = ({
         return barnTranslations ? barnTranslations["trail"] : "trail";
       case "#ffd8a8":
         return barnTranslations ? barnTranslations["round_pen"] : "round_pen";
+      case "#8F9779":
+        return barnTranslations ? barnTranslations["parking"] : "parking";
       case "#ffc9c9":
       default:
         return barnTranslations ? barnTranslations["lounge"] : "lounge";
     }
   };
+
+  palette["gween"] = ["#4B5320", "#8F9779", "#87A96B", "#32de84", "#4FFFB0"];
 
   return (
     <div className="area-color-picker-content--default">
