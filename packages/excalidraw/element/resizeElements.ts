@@ -41,20 +41,16 @@ import type {
 import type { PointerDownState } from "../types";
 import type Scene from "../scene/Scene";
 import {
-  getApproxMinLineWidth,
   getBoundTextElement,
   getBoundTextElementId,
   getContainerElement,
   handleBindTextResize,
   getBoundTextMaxWidth,
-  getApproxMinLineHeight,
-  measureText,
-  getMinTextElementWidth,
 } from "./textElement";
 import { wrapText } from "./textWrapping";
 import { LinearElementEditor } from "./linearElementEditor";
 import { isInGroup } from "../groups";
-import type { GlobalPoint } from "../../math";
+import type { GlobalPoint } from "@excalidraw/math";
 import {
   pointCenter,
   normalizeRadians,
@@ -63,7 +59,13 @@ import {
   pointRotateRads,
   type Radians,
   type LocalPoint,
-} from "../../math";
+} from "@excalidraw/math";
+import {
+  getMinTextElementWidth,
+  measureText,
+  getApproxMinLineWidth,
+  getApproxMinLineHeight,
+} from "./textMeasurements";
 
 // Returns true when transform (resizing/rotation) happened
 export const transformElements = (
@@ -771,8 +773,8 @@ const getResizedOrigin = (
         x: x + ((prevWidth - newWidth) / 2) * (Math.cos(angle) + 1),
         y:
           y +
-          (newHeight - prevHeight) / 2 +
-          ((prevWidth - newWidth) / 2) * Math.sin(angle),
+          ((prevWidth - newWidth) / 2) * Math.sin(angle) +
+          (prevHeight - newHeight) / 2,
       };
     case "west-side":
       return {

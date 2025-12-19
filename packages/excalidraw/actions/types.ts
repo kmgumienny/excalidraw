@@ -3,7 +3,7 @@ import type {
   ExcalidrawElement,
   OrderedExcalidrawElement,
 } from "../element/types";
-import type { StoreActionType } from "../store";
+import type { CaptureUpdateActionType } from "../store";
 import type {
   AppClassProperties,
   AppState,
@@ -25,7 +25,7 @@ export type ActionResult =
       elements?: readonly ExcalidrawElement[] | null;
       appState?: Partial<AppState> | null;
       files?: BinaryFiles | null;
-      storeAction: StoreActionType;
+      captureUpdate: CaptureUpdateActionType;
       replaceFiles?: boolean;
     }
   | false;

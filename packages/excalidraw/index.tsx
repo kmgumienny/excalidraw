@@ -46,6 +46,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     onPointerDown,
     onPointerUp,
     onScrollChange,
+    onDuplicate,
     children,
     validateEmbeddable,
     renderEmbeddable,
@@ -137,6 +138,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           onPointerDown={onPointerDown}
           onPointerUp={onPointerUp}
           onScrollChange={onScrollChange}
+          onDuplicate={onDuplicate}
           validateEmbeddable={validateEmbeddable}
           renderEmbeddable={renderEmbeddable}
           aiEnabled={aiEnabled !== false}
@@ -234,8 +236,7 @@ export {
   exportToBlob,
   exportToCanvas,
   exportToClipboard,
-  exportToSvg,
-} from "../utils/export";
+} from "@excalidraw/utils/export";
 
 export {
   loadFromBlob,
@@ -253,6 +254,7 @@ export {
   MIME_TYPES,
   ROUNDNESS,
   THEME,
+  UserIdleState,
 } from "./constants";
 
 export {
@@ -261,7 +263,7 @@ export {
   newElementWith,
 } from "./element/mutateElement";
 
-export { StoreAction } from "./store";
+export { CaptureUpdateAction } from "./store";
 
 export { parseLibraryTokensFromUrl, useHandleLibrary } from "./data/library";
 
@@ -289,8 +291,10 @@ export {
   elementPartiallyOverlapsWithOrContainsBBox,
   elementsOverlappingBBox,
   isElementInsideBBox,
-} from "../utils/withinBounds";
+} from "@excalidraw/utils/withinBounds";
 
 export { DiagramToCodePlugin } from "./components/DiagramToCodePlugin/DiagramToCodePlugin";
 export { getDataURL } from "./data/blob";
 export { isElementLink } from "./element/elementLink";
+
+export { setCustomTextMetricsProvider } from "./element/textMeasurements";

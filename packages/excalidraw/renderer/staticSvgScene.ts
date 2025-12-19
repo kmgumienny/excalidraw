@@ -17,8 +17,8 @@ import { LinearElementEditor } from "../element/linearElementEditor";
 import {
   getBoundTextElement,
   getContainerElement,
-  getLineHeightInPx,
 } from "../element/textElement";
+import { getLineHeightInPx } from "../element/textMeasurements";
 import {
   isArrowElement,
   isIframeLikeElement,

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { actionToggleZenMode } from "../actions";
 import type { ActionManager } from "../actions/manager";
 import { trackEvent } from "../analytics";
+import { useTunnels } from "../context/tunnels";
 import {
   shouldAllowVerticalAlign,
   suppportsHorizontalAlign,
@@ -38,9 +39,8 @@ import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { Tooltip } from "./Tooltip";
 
+import { alignActionsPredicate } from "../actions/actionAlign";
 import { CLASSES } from "../constants";
-import { useTunnels } from "../context/tunnels";
-import "./Actions.scss";
 
 export const canChangeStrokeColor = (
   appState: UIAppState,
@@ -80,10 +80,12 @@ export const SelectedShapeActions = ({
   appState,
   elementsMap,
   renderAction,
+  app,
 }: {
   appState: UIAppState;
   elementsMap: NonDeletedElementsMap | NonDeletedSceneElementsMap;
   renderAction: ActionManager["renderAction"];
+  app: AppClassProperties;
 }) => {
   const targetElements = getTargetElements(elementsMap, appState);
 
@@ -122,6 +124,9 @@ export const SelectedShapeActions = ({
     !appState.croppingElementId &&
     targetElements.length === 1 &&
     isImageElement(targetElements[0]);
+
+  const showAlignActions =
+    !isSingleElementBoundContainer && alignActionsPredicate(appState, app);
 
   return (
     <div className="panelColumn">
@@ -193,7 +198,7 @@ export const SelectedShapeActions = ({
         </div>
       </fieldset>
 
-      {targetElements.length > 1 && !isSingleElementBoundContainer && (
+      {showAlignActions && !isSingleElementBoundContainer && (
         <fieldset>
           <legend>{t("labels.align")}</legend>
           <div className="buttonList">
@@ -340,25 +345,6 @@ export const ShapesSwitcher = ({
           title={t("toolBar.extraTools")}
         >
           {extraToolsIcon}
-          {app.props.aiEnabled !== false && (
-            <div
-              style={{
-                display: "inline-flex",
-                marginLeft: "auto",
-                padding: "2px 4px",
-                borderRadius: 6,
-                fontSize: 8,
-                fontFamily: "Cascadia, monospace",
-                position: "absolute",
-                background: "var(--color-promo)",
-                color: "var(--color-surface-lowest)",
-                bottom: 3,
-                right: 4,
-              }}
-            >
-              AI
-            </div>
-          )}
         </DropdownMenu.Trigger>
         <DropdownMenu.Content
           onClickOutside={() => setIsExtraToolsMenuOpen(false)}

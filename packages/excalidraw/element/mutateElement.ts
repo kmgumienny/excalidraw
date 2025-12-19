@@ -1,4 +1,4 @@
-import type { ExcalidrawElement, SceneElementsMap } from "./types";
+import type { ExcalidrawElement, NonDeletedSceneElementsMap } from "./types";
 import Scene from "../scene/Scene";
 import { getSizeFromPoints } from "../points";
 import { randomInteger } from "../random";
@@ -7,7 +7,7 @@ import type { Mutable } from "../utility-types";
 import { ShapeCache } from "../scene/ShapeCache";
 import { isElbowArrow } from "./typeChecks";
 import { updateElbowArrowPoints } from "./elbowArrow";
-import type { Radians } from "../../math";
+import type { Radians } from "@excalidraw/math";
 
 export type ElementUpdate<TElement extends ExcalidrawElement> = Omit<
   Partial<TElement>,
@@ -33,15 +33,18 @@ export const mutateElement = <TElement extends Mutable<ExcalidrawElement>>(
 
   // casting to any because can't use `in` operator
   // (see https://github.com/microsoft/TypeScript/issues/21732)
-  const { points, fixedSegments, fileId } = updates as any;
+  const { points, fixedSegments, fileId, startBinding, endBinding } =
+    updates as any;
 
   if (
     isElbowArrow(element) &&
     (Object.keys(updates).length === 0 || // normalization case
       typeof points !== "undefined" || // repositioning
-      typeof fixedSegments !== "undefined") // segment fixing
+      typeof fixedSegments !== "undefined" || // segment fixing
+      typeof startBinding !== "undefined" ||
+      typeof endBinding !== "undefined") // manual binding to element
   ) {
-    const elementsMap = toBrandedType<SceneElementsMap>(
+    const elementsMap = toBrandedType<NonDeletedSceneElementsMap>(
       Scene.getScene(element)?.getNonDeletedElementsMap() ?? new Map(),
     );
 
@@ -58,6 +61,8 @@ export const mutateElement = <TElement extends Mutable<ExcalidrawElement>>(
         {
           fixedSegments,
           points,
+          startBinding,
+          endBinding,
         },
         {
           isDragging: options?.isDragging,
