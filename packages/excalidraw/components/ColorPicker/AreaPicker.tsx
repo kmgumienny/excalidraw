@@ -117,7 +117,6 @@ export const AreaPicker = ({
       <div
         ref={pickerRef}
         onKeyDown={(event) => {
-          debugger;
           const handled = colorPickerKeyNavHandler({
             event,
             activeColorPickerSection,

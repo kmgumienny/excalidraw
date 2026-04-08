@@ -94,7 +94,6 @@ const AreaPickerColorList = ({
 
         // no white, no zanks
         if (color === "#ffffff") {
-          debugger;
           color = "#fcb27c";
         }
 
