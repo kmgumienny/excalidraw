@@ -225,6 +225,12 @@ export {
 } from "./element";
 export { defaultLang, languages, useI18n } from "./i18n";
 
+// Type-only re-exports the consumer (barn-management-app) relies on. These
+// existed in the previously-packed `.tgz` (`excalidraw-excalidraw-0.17.1-kav-0.1.0.tgz`)
+// and were removed from the source at some point. Re-exporting from `./types`
+// restores parity with the old tarball.
+export type { BinaryFiles, ExcalidrawImperativeAPI } from "./types";
+
 export { reconcileElements } from "./data/reconcile";
 
 export {
